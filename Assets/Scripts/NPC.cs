@@ -29,6 +29,11 @@ public class NPC : MonoBehaviour {
     }
 
 
+    public void OnTriggerEnter2D(Collider2D other) {
+        currentState.OnTriggerEnter2D(other);
+    }
+
+
     // Getters and Setters
     public OnGuardState GetOnGuardState(){
         return this.onGuardState;

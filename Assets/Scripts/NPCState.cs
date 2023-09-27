@@ -10,6 +10,7 @@ public abstract class NPCState: MonoBehaviour {
         this.npc = npc;
     }
 
+    public abstract void OnTriggerEnter2D(Collider2D other);
     public abstract void Enter();
     public abstract void Update();
     public abstract void Exit();

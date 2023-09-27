@@ -17,9 +17,12 @@ public class KillPlayerState : NPCState
     public override void Update()
     {
         // Verifique se o jogador está à vista
+        print("Matando Player");
+        /*
         if (!PlayerIsInSight()) {
             npc.ChangeState(npc.GetOnGuardState());
         }
+        */
     }
 
     public override void Exit()
@@ -32,5 +35,11 @@ public class KillPlayerState : NPCState
     {
         // Implemente a lógica para verificar se o jogador está visível ao NPC
         return false;
+    }
+
+
+    // TODO
+    public override void OnTriggerEnter2D(Collider2D other) {
+        print("Colidindo");
     }
 }

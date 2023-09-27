@@ -26,5 +26,13 @@ public class OnGuardState : NPCState
     {
         Debug.Log("Saiu do estado OnGuard");
     }
+
+
+    public override void OnTriggerEnter2D(Collider2D other) {
+        print("Colidindo");
+        if (other.CompareTag("Player") && !playerIsInSight) {
+            playerIsInSight = true;
+        }
+    }
 }
 

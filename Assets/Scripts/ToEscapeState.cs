@@ -31,4 +31,10 @@ public class ToEscapeState : NPCState
         // Lógica de saída para o estado ToEscape
         Debug.Log("Saiu do estado ToEscape");
     }
+
+
+    // TODO
+    public override void OnTriggerEnter2D(Collider2D other) {
+        print("Colidindo");
+    }
 }

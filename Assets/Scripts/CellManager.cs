@@ -39,4 +39,12 @@ public class CellManager : MonoBehaviour {
             }
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Attack"))
+        {
+            other.gameObject.transform.parent.transform.parent = gameObject.transform;
+        }
+    }
 }

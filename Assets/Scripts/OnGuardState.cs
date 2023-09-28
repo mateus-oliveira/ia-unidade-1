@@ -16,6 +16,7 @@ public class OnGuardState : NPCState
 
     public override void Update()
     {
+        Debug.Log("Estou ativooo!!!!");
         if (playerIsInSight)
         {
             npc.ChangeState(npc.GetKillPlayerState());

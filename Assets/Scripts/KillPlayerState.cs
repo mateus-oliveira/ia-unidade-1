@@ -7,6 +7,7 @@ using UnityEngine;
 public class KillPlayerState : NPCState
 {
     private bool isFollowingPlayer;
+    private Vector3 distanceToPlayer;
     public KillPlayerState(NPC npc) : base(npc) { }
 
     public override void Enter()
@@ -27,6 +28,10 @@ public class KillPlayerState : NPCState
         else if (npc.GetLife() < 50) {
             npc.ChangeState(npc.GetToEscapeState());
         }
+
+        distanceToPlayer = npc.GetPlayerPosition() - npc.transform.position;
+        distanceToPlayer.Normalize();
+        npc.transform.Translate(distanceToPlayer * 3 * Time.deltaTime);
         
     }
 

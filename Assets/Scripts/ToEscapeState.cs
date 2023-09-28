@@ -6,6 +6,8 @@ using UnityEngine;
 public class ToEscapeState : NPCState
 {
     private bool isEscaping;
+    private Vector3 distanceToPlayer;
+    private Vector3 oppositeDirection;
     public ToEscapeState(NPC npc) : base(npc) { }
 
     public override void Enter()
@@ -20,6 +22,11 @@ public class ToEscapeState : NPCState
         {
             npc.ChangeState(npc.GetOnGuardState());
         }
+
+        distanceToPlayer = npc.GetPlayerPosition() - npc.transform.position;
+        oppositeDirection = -(distanceToPlayer);
+        oppositeDirection.Normalize();
+        npc.transform.Translate(oppositeDirection * 3 * Time.deltaTime);
     }
 
     public override void Exit()

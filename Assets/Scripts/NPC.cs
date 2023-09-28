@@ -5,6 +5,8 @@ using UnityEngine;
 public class NPC : MonoBehaviour {
     [SerializeField]
     private int life = 100;
+    [SerializeField]
+    private Transform playerTransform;
     private NPCState currentState;
     private OnGuardState onGuardState;
     private KillPlayerState killPlayerState;
@@ -62,5 +64,12 @@ public class NPC : MonoBehaviour {
         } else {
             this.life = life;
         }
+    }
+    public Vector3 GetPlayerPosition(){
+        if (playerTransform != null)
+        {
+            return playerTransform.position;
+        }
+        return Vector3.zero;
     }
 }

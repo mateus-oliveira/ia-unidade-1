@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class OnGuardState : NPCState
 {
-    private bool playerIsInSight = false;
+    private bool playerIsInSight;
 
     public OnGuardState(NPC npc) : base(npc) { }
 
     public override void Enter() {
+        playerIsInSight = false;
         Debug.Log("Entrou no estado OnGuard");
     }
 
@@ -28,11 +29,13 @@ public class OnGuardState : NPCState
     }
 
 
-    public override void OnTriggerEnter2D(Collider2D other) {
-        print("Colidindo");
+    public override void HandleCollision(Collider2D other) {
+        Debug.Log("Colidindo");
         if (other.CompareTag("Player") && !playerIsInSight) {
             playerIsInSight = true;
         }
     }
-}
 
+    public override void CollisionFinished(Collider2D other) {
+    }
+}

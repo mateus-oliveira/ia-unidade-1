@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NPC : MonoBehaviour {
+    [SerializeField]
     private int life = 100;
     private NPCState currentState;
     private OnGuardState onGuardState;
@@ -30,7 +31,11 @@ public class NPC : MonoBehaviour {
 
 
     public void OnTriggerEnter2D(Collider2D other) {
-        currentState.OnTriggerEnter2D(other);
+        currentState.HandleCollision(other);
+    }
+
+    public void OnTriggerExit2D(Collider2D other) {
+        currentState.CollisionFinished(other);
     }
 
 

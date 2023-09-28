@@ -6,23 +6,28 @@ using UnityEngine;
 // No estado KillPlayer, o NPC persegue o jogador
 public class KillPlayerState : NPCState
 {
+    private bool isFollowingPlayer;
     public KillPlayerState(NPC npc) : base(npc) { }
 
     public override void Enter()
     {
         // Lógica de entrada para o estado KillPlayer
         Debug.Log("Entrou no estado KillPlayer");
+        isFollowingPlayer = true;
     }
 
     public override void Update()
     {
         // Verifique se o jogador está à vista
-        print("Matando Player");
-        /*
-        if (!PlayerIsInSight()) {
+        Debug.Log("Matando Player");
+        
+        if (!isFollowingPlayer && npc.GetLife() >= 50) {
             npc.ChangeState(npc.GetOnGuardState());
         }
-        */
+        else if (npc.GetLife() < 50) {
+            npc.ChangeState(npc.GetToEscapeState());
+        }
+        
     }
 
     public override void Exit()
@@ -39,7 +44,13 @@ public class KillPlayerState : NPCState
 
 
     // TODO
-    public override void OnTriggerEnter2D(Collider2D other) {
-        print("Colidindo");
+    public override void HandleCollision(Collider2D other) {
+        //Debug.Log("Matei!!!");
     }
+
+    public override void CollisionFinished(Collider2D other) {
+        isFollowingPlayer = false;
+    }
+
+
 }

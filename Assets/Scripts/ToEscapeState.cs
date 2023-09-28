@@ -5,36 +5,34 @@ using UnityEngine;
 // No estado ToEscape, o NPC foge se estiver com pouca vida
 public class ToEscapeState : NPCState
 {
+    private bool isEscaping;
     public ToEscapeState(NPC npc) : base(npc) { }
 
     public override void Enter()
     {
-        // Lógica de entrada para o estado ToEscape
+        isEscaping = true;
         Debug.Log("Entrou no estado ToEscape");
     }
 
     public override void Update()
     {
-        // Verifique a saúde do NPC
-        if (npc.GetLife() > 30) // Exemplo: Fuga apenas quando a vida estiver abaixo de 30
+        if (!isEscaping)
         {
-            // Transição para OnGuard
             npc.ChangeState(npc.GetOnGuardState());
         }
-
-        // Implemente a lógica para fugir do jogador
-        // Isso pode envolver movimento para longe do jogador.
     }
 
     public override void Exit()
     {
-        // Lógica de saída para o estado ToEscape
         Debug.Log("Saiu do estado ToEscape");
     }
 
-
     // TODO
-    public override void OnTriggerEnter2D(Collider2D other) {
-        print("Colidindo");
+    public override void HandleCollision(Collider2D other) {
+        Debug.Log("Colidindo");
+    }
+
+    public override void CollisionFinished(Collider2D other) {
+        isEscaping = false;
     }
 }

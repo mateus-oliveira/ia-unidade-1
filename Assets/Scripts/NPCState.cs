@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class NPCState: MonoBehaviour {
+public abstract class NPCState {
     protected NPC npc;
 
     public NPCState(NPC npc) {
         this.npc = npc;
     }
 
-    public abstract void OnTriggerEnter2D(Collider2D other);
+    public abstract void HandleCollision(Collider2D other);
+
+    public abstract void CollisionFinished(Collider2D other);
+
     public abstract void Enter();
     public abstract void Update();
     public abstract void Exit();

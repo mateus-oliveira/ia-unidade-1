@@ -13,7 +13,6 @@ public class PlayerMovements : MonoBehaviour {
     void Start() {
         // sprite = GetComponent<SpriteRenderer>();
         rigidBody = GetComponent<Rigidbody2D>();
-        
     }
 
     // Update is called once per frame
@@ -27,6 +26,8 @@ public class PlayerMovements : MonoBehaviour {
             float x = moveX * moveSpeed;
             float y = moveY * moveSpeed;
             rigidBody.velocity = new Vector2(x, y);
+        } else {
+            rigidBody.velocity = Vector2.zero;
         }
     }
 }

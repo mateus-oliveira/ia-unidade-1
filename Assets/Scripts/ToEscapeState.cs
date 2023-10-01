@@ -26,7 +26,7 @@ public class ToEscapeState : NPCState
         distanceToPlayer = npc.GetPlayerPosition() - npc.transform.position;
         oppositeDirection = -(distanceToPlayer);
         oppositeDirection.Normalize();
-        npc.transform.Translate(oppositeDirection * 3 * Time.deltaTime);
+        npc.transform.Translate(oppositeDirection * 4 * Time.deltaTime);
     }
 
     public override void Exit()

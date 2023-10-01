@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NPC : MonoBehaviour {
-    [SerializeField]
-    private int life = 100;
-    [SerializeField]
-    private Transform playerTransform;
+    private int maxLife = 100;
     private NPCState currentState;
     private OnGuardState onGuardState;
     private KillPlayerState killPlayerState;
     private ToEscapeState toEscapeState;
+    [SerializeField] private int life = 100;
+    [SerializeField] private int damageAmount = 10;
+    [SerializeField] private Transform playerTransform;
 
     private void Start() {
         onGuardState = new OnGuardState(this);
@@ -31,6 +31,23 @@ public class NPC : MonoBehaviour {
         currentState.Enter();
     }
 
+    public void AddToLife(int life) {
+        this.life += life;
+        if (this.life > maxLife) {
+            this.life = maxLife;
+        }
+        if (this.life < 0) {
+            Destroy(gameObject);
+        }
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("PlayerAttack"))
+        {
+            AddToLife(other.gameObject.transform.parent.GetComponent<PlayerMovements>().GetDamageAmount() * -1);
+        }
+    }
 
     public void OnTriggerStay2D(Collider2D other) {
         currentState.HandleCollision(other);
@@ -40,36 +57,42 @@ public class NPC : MonoBehaviour {
         currentState.CollisionFinished(other);
     }
 
-
     // Getters and Setters
     public OnGuardState GetOnGuardState(){
         return this.onGuardState;
     }
+
     public KillPlayerState GetKillPlayerState(){
         return this.killPlayerState;
     }
+
     public ToEscapeState GetToEscapeState(){
         return this.toEscapeState;
     }
 
-
     public int GetLife(){
         return this.life;
     }
+
     public void SetLife(int life){
-        if (life > 100){
-            this.life = 100;
+        if (life > maxLife){
+            this.life = maxLife;
         } else if (life < 0) {
             this.life = 0;
         } else {
             this.life = life;
         }
     }
+
     public Vector3 GetPlayerPosition(){
         if (playerTransform != null)
         {
             return playerTransform.position;
         }
         return Vector3.zero;
+    }
+
+    public int GetDamageAmount(){
+        return damageAmount;
     }
 }

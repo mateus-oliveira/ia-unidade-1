@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum PowerUpType {
     HEAL,
@@ -9,19 +10,16 @@ public enum PowerUpType {
 
 public class PowerUp : MonoBehaviour
 {
-    [SerializeField]
-    private PowerUpType powerUpType;
-    private int healAmount = 30;
+    private int healAmount = 20;
     private SpriteRenderer spriteRenderer;
+    [SerializeField] private PowerUpType powerUpType;
+    [SerializeField] private Sprite sprite;
 
     void Start(){
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
-        if (powerUpType == PowerUpType.HEAL)
+        if (sprite != null)
         {
-            spriteRenderer.color = Color.red;
-        } else {
-            spriteRenderer.color = Color.blue;
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.sprite = sprite;
         }
     }
 

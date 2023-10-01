@@ -5,7 +5,8 @@ using UnityEngine;
 
 // No estado KillPlayer, o NPC persegue o jogador
 public class KillPlayerState : NPCState
-{
+{   
+    private int lostingLife = 50;
     private bool isFollowingPlayer;
     private Vector3 distanceToPlayer;
     public KillPlayerState(NPC npc) : base(npc) { }
@@ -22,16 +23,16 @@ public class KillPlayerState : NPCState
         // Verifique se o jogador está à vista
         Debug.Log("Matando Player");
         
-        if (!isFollowingPlayer && npc.GetLife() >= 50) {
+        if (!isFollowingPlayer && npc.GetLife() >= lostingLife) {
             npc.ChangeState(npc.GetOnGuardState());
         }
-        else if (npc.GetLife() < 50) {
+        else if (npc.GetLife() < lostingLife) {
             npc.ChangeState(npc.GetToEscapeState());
         }
 
         distanceToPlayer = npc.GetPlayerPosition() - npc.transform.position;
         distanceToPlayer.Normalize();
-        npc.transform.Translate(distanceToPlayer * 3 * Time.deltaTime);
+        npc.transform.Translate(distanceToPlayer * 4 * Time.deltaTime);
         
     }
 

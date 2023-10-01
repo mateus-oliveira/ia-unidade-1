@@ -8,7 +8,9 @@ public class PlayerMovements : MonoBehaviour {
     private float moveSpeed = 10f;
     private int maxLife = 100;
     private int life;
-    private int bombAmounts = 3; // Bomb é a coisinha q vai explodir em volta do jogador
+    private int bombAmounts = 0;
+    private int damageAmount = 80;
+    [SerializeField] private GameObject attack;
 
     // UI
     [SerializeField] private Text bombTexts; 
@@ -25,6 +27,7 @@ public class PlayerMovements : MonoBehaviour {
     }
 
     void Update() {
+        this.Attack();
         moveX = Input.GetAxisRaw("Horizontal");
         moveY = Input.GetAxisRaw("Vertical");
     }
@@ -39,30 +42,62 @@ public class PlayerMovements : MonoBehaviour {
         }
     }
 
-    public void AddToLife(int life){ // "Adicionar" valor negativo no caso de tirar vida
+    public void AddToLife(int life) {
         this.life += life;
-        if (this.life > maxLife)
-        {
+        if (this.life > maxLife) {
             this.life = maxLife;
+        }
+        if (this.life < 0) {
+            this.life = 0;
         }
         UpdateUI();
     }
 
-    public void AddToBombs(){
-        bombAmounts++;
+    public void AddToBombs(bool decrease=false){
+        if (decrease) {
+            bombAmounts--;
+            if (bombAmounts < 0) {
+                bombAmounts = 0;
+            }
+        } else {
+            bombAmounts++;
+        }
+
         UpdateUI();
     }
 
     private void UpdateUI(){
         lifeSlider.value = life;
-        bombTexts.text = "Bombas " + bombAmounts.ToString();
+        bombTexts.text = bombAmounts.ToString();
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void Attack () {
+        if (bombAmounts <= 0){
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            attack.SetActive(true);
+            this.AddToBombs(true);
+            Invoke("EndAttack", 2f);
+        }
+
+        
+    }
+
+    private void EndAttack () {
+        attack.SetActive(false);
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Attack"))
         {
-            AddToLife(other.gameObject.transform.parent.GetComponent<NPC>().GetDamageAmount() * -1); // Dano do inimigo
+            AddToLife(other.gameObject.transform.parent.GetComponent<NPC>().GetDamageAmount() * -1);
         }
+    }
+
+    public int GetDamageAmount(){
+        return damageAmount;
     }
 }

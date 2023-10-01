@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour {
     private int maxLife = 100;
-    [SerializeField]
-    private int life = 100;
-    [SerializeField]
-    private Transform playerTransform;
-    [SerializeField]
-    private int damageAmount = 40;
     private NPCState currentState;
     private OnGuardState onGuardState;
     private KillPlayerState killPlayerState;
     private ToEscapeState toEscapeState;
+    [SerializeField] private int life = 100;
+    [SerializeField] private int damageAmount = 10;
+    [SerializeField] private Transform playerTransform;
 
     private void Start() {
         onGuardState = new OnGuardState(this);
@@ -32,6 +29,24 @@ public class NPC : MonoBehaviour {
         currentState.Exit();
         currentState = newState;
         currentState.Enter();
+    }
+
+    public void AddToLife(int life) {
+        this.life += life;
+        if (this.life > maxLife) {
+            this.life = maxLife;
+        }
+        if (this.life < 0) {
+            Destroy(gameObject);
+        }
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("PlayerAttack"))
+        {
+            AddToLife(other.gameObject.transform.parent.GetComponent<PlayerMovements>().GetDamageAmount() * -1);
+        }
     }
 
     public void OnTriggerStay2D(Collider2D other) {

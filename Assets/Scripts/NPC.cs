@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NPC : MonoBehaviour {
+    private int maxLife = 100;
     [SerializeField]
     private int life = 100;
     [SerializeField]
     private Transform playerTransform;
+    [SerializeField]
+    private int damageAmount = 40;
     private NPCState currentState;
     private OnGuardState onGuardState;
     private KillPlayerState killPlayerState;
@@ -31,7 +34,6 @@ public class NPC : MonoBehaviour {
         currentState.Enter();
     }
 
-
     public void OnTriggerStay2D(Collider2D other) {
         currentState.HandleCollision(other);
     }
@@ -40,36 +42,42 @@ public class NPC : MonoBehaviour {
         currentState.CollisionFinished(other);
     }
 
-
     // Getters and Setters
     public OnGuardState GetOnGuardState(){
         return this.onGuardState;
     }
+
     public KillPlayerState GetKillPlayerState(){
         return this.killPlayerState;
     }
+
     public ToEscapeState GetToEscapeState(){
         return this.toEscapeState;
     }
 
-
     public int GetLife(){
         return this.life;
     }
+
     public void SetLife(int life){
-        if (life > 100){
-            this.life = 100;
+        if (life > maxLife){
+            this.life = maxLife;
         } else if (life < 0) {
             this.life = 0;
         } else {
             this.life = life;
         }
     }
+
     public Vector3 GetPlayerPosition(){
         if (playerTransform != null)
         {
             return playerTransform.position;
         }
         return Vector3.zero;
+    }
+
+    public int GetDamageAmount(){
+        return damageAmount;
     }
 }

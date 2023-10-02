@@ -19,6 +19,7 @@ public class PlayerMovements : MonoBehaviour {
 
     // private SpriteRenderer sprite;
     private Rigidbody2D rigidBody;
+    private bool isAttacking = false;
 
     void Start() {
         life = maxLife;
@@ -79,6 +80,7 @@ public class PlayerMovements : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.Space)) {
+            isAttacking = true;
             attack.SetActive(true);
             this.AddToBombs(true);
             Invoke("EndAttack", 0.2f);
@@ -88,12 +90,13 @@ public class PlayerMovements : MonoBehaviour {
     }
 
     private void EndAttack () {
+        isAttacking = false;
         attack.SetActive(false);
     }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Attack"))
+        if (other.CompareTag("Attack") && !isAttacking)
         {
             AddToLife(other.gameObject.transform.parent.GetComponent<NPC>().GetDamageAmount() * -1);
         }

@@ -79,7 +79,7 @@ public class PlayerMovements : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) {
             attack.SetActive(true);
             this.AddToBombs(true);
-            Invoke("EndAttack", 2f);
+            Invoke("EndAttack", 0.2f);
         }
 
         

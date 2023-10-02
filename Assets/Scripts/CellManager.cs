@@ -9,7 +9,7 @@ public class CellManager : MonoBehaviour {
     [SerializeField] private float activationDistance = 20f;
 
     private void Start() {
-        player = GameObject.Find("player");
+        player = GameObject.Find("Player");
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {

@@ -45,6 +45,10 @@ public class CellManager : MonoBehaviour {
         if (other.CompareTag("Attack"))
         {
             other.gameObject.transform.parent.transform.parent = gameObject.transform;
+        } else if (other.CompareTag("PowerUp"))
+        {
+            other.gameObject.transform.parent = gameObject.transform;
         }
+
     }
 }

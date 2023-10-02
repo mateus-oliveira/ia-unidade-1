@@ -10,9 +10,10 @@ public class NPC : MonoBehaviour {
     private ToEscapeState toEscapeState;
     [SerializeField] private int life = 100;
     [SerializeField] private int damageAmount = 10;
-    [SerializeField] private Transform playerTransform;
+    private GameObject player;
 
     private void Start() {
+        player = GameObject.Find("Player");
         onGuardState = new OnGuardState(this);
         killPlayerState = new KillPlayerState(this);
         toEscapeState = new ToEscapeState(this);
@@ -77,9 +78,9 @@ public class NPC : MonoBehaviour {
     }
 
     public Vector3 GetPlayerPosition(){
-        if (playerTransform != null)
+        if (player != null)
         {
-            return playerTransform.position;
+            return player.transform.position;
         }
         return Vector3.zero;
     }

@@ -9,7 +9,7 @@ public class CellManager : MonoBehaviour {
     [SerializeField] private float activationDistance = 20f;
 
     private void Start() {
-        player = GameObject.Find("player");
+        player = GameObject.Find("Player");
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -45,6 +45,10 @@ public class CellManager : MonoBehaviour {
         if (other.CompareTag("Attack"))
         {
             other.gameObject.transform.parent.transform.parent = gameObject.transform;
+        } else if (other.CompareTag("PowerUp"))
+        {
+            other.gameObject.transform.parent = gameObject.transform;
         }
+
     }
 }
